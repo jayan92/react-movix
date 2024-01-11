@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ContentWrapper from "../../../components/contentWrapper/ContentWrapper";
 import Carousel from "../../../components/carousel/Carousel";
 import SwitchTabs from "../../../components/switchTabs/SwitchTabs";

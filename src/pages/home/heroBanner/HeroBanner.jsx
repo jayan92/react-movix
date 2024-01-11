@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./style.scss";
 
 import useFetch from "../../../hooks/useFetch";
-
+import BannerImg from "/banner.jpg";
 import Img from "../../../components/lazyLoadImage/Img";
 import ContentWrapper from "../../../components/contentWrapper/ContentWrapper";
 
@@ -14,11 +14,14 @@ const HeroBanner = () => {
   const [background, setBackground] = useState("");
   const { url } = useSelector((state) => state.home);
   const { data, loading } = useFetch("/movie/upcoming");
-  console.log("loading", loading);
 
   useEffect(() => {
     const bg = url.backdrop + data?.results?.[Math.floor(Math.random() * 20)]?.backdrop_path;
-    setBackground(bg);
+    if (bg.toString().includes("undefined/")) {
+      setBackground(BannerImg);
+    } else {
+      setBackground(bg);
+    }
   }, [data]);
 
   const searchQueryHandler = (event) => {
