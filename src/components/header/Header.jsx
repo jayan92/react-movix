@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { SlMenu } from "react-icons/sl";
 import { VscChromeClose } from "react-icons/vsc";
@@ -91,7 +91,11 @@ const Header = () => {
 
         <div className="mobileMenuItems">
           <HiOutlineSearch onClick={openSearch} />
-          {mobileMenu ? <VscChromeClose onClick={() => setMobileMenu(false)} /> : <SlMenu onClick={openMobileMenu} />}
+          {mobileMenu ? (
+            <VscChromeClose onClick={() => setMobileMenu(false)} />
+          ) : (
+            <SlMenu onClick={openMobileMenu} />
+          )}
         </div>
       </ContentWrapper>
 

@@ -5,24 +5,22 @@ import "./style.scss";
 
 import useFetch from "../../../hooks/useFetch";
 import BannerImg from "/banner.jpg";
-import Img from "../../../components/lazyLoadImage/Img";
 import ContentWrapper from "../../../components/contentWrapper/ContentWrapper";
 
 const HeroBanner = () => {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
-  const [background, setBackground] = useState("");
+  const [background, setBackground] = useState(BannerImg);
   const { url } = useSelector((state) => state.home);
-  const { data, loading } = useFetch("/movie/upcoming");
+  const { data } = useFetch("/movie/upcoming");
 
   useEffect(() => {
-    const bg = url.backdrop + data?.results?.[Math.floor(Math.random() * 20)]?.backdrop_path;
-    if (bg.toString().includes("undefined/")) {
-      setBackground(BannerImg);
-    } else {
-      setBackground(bg);
+    if (!data || !url.backdrop) return;
+    const backdropPath = data?.results?.[Math.floor(Math.random() * 20)]?.backdrop_path;
+    if (backdropPath) {
+      setBackground(url.backdrop.replace("original", "w1280") + backdropPath);
     }
-  }, [data]);
+  }, [data, url]);
 
   const searchQueryHandler = (event) => {
     if (event.key === "Enter" && query.length > 0) {
@@ -32,11 +30,9 @@ const HeroBanner = () => {
 
   return (
     <div className="heroBanner">
-      {!loading && data && (
-        <div className="backdrop-img">
-          <Img src={background} />
-        </div>
-      )}
+      <div className="backdrop-img">
+        <img src={background} alt="" loading="eager" />
+      </div>
       <div className="opacity-layer"></div>
       <ContentWrapper>
         <div className="heroBannerContent">
